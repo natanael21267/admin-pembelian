@@ -1,0 +1,188 @@
+<div class="page-wrapper">
+
+  <div class="form-container">
+
+    <a href="/" class="btn-back">
+      ⬅ Kembali ke Dashboard
+    </a>
+
+    <div class="form-header">
+      <div class="icon-box">
+        📜
+      </div>
+      <div>
+        <h3>Riwayat Pembelian</h3>
+        <span>Daftar transaksi pembelian produk</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="table-wrapper">
+
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th>Produk</th>
+            <th>Qty</th>
+            <th>Harga</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% data.forEach(r => { %>
+          <tr>
+            <td><%= r.produk %></td>
+            <td><%= r.qty %></td>
+
+            <td>Rp <%= Number(r.harga || 0).toLocaleString() %></td>
+            <td>Rp <%= Number(r.total || 0).toLocaleString() %></td>
+
+            <td>
+              <% if(r.status === "success"){ %>
+                <span class="badge success">Sukses</span>
+              <% } else { %>
+                <span class="badge cancel">Cancel</span>
+              <% } %>
+            </td>
+
+            <td>
+              <% if (r.status === "success") { %>
+                <a href="/cancel/<%= r.aksi_id %>" class="btn-cancel">
+                  Batalkan
+                </a>
+              <% } else { %>
+                —
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .page-wrapper{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 15px;
+  }
+
+  .form-container{
+    width:880px;
+    background:#fff;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 25px 45px rgba(0,0,0,.12);
+  }
+
+  .btn-back{
+    display:inline-block;
+    margin-bottom:14px;
+    padding:8px 14px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    background:#f3f6ff;
+    border:1px solid #d6ddff;
+    color:#2f60c8;
+    transition:.25s;
+  }
+
+  .btn-back:hover{
+    background:#e8eeff;
+    transform:translateX(-2px);
+  }
+
+  .form-header{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+
+  .icon-box{
+    width:50px;
+    height:50px;
+    border-radius:14px;
+    background:#e9f3ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+  }
+
+  hr{ margin:18px 0; opacity:.3; }
+
+  .table-wrapper{
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #eee;
+  }
+
+  .table-custom{
+    width:100%;
+    border-collapse:collapse;
+  }
+
+  .table-custom thead{
+    background:#2f80ed;
+    color:#fff;
+  }
+
+  .table-custom th,
+  .table-custom td{
+    padding:12px 14px;
+    text-align:left;
+  }
+
+  .table-custom tbody tr:nth-child(even){
+    background:#fafafa;
+  }
+
+  .table-custom tbody tr:hover{
+    background:#eef4ff;
+    transition:.2s;
+  }
+
+  .badge{
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+  }
+
+  .badge.success{
+    background:#e7f9ef;
+    color:#1f8b4d;
+  }
+
+  .badge.cancel{
+    background:#ffecec;
+    color:#c0392b;
+  }
+
+  .btn-cancel{
+    padding:6px 10px;
+    border-radius:8px;
+    text-decoration:none;
+    background:#ffdddd;
+    border:1px solid #ffb7b7;
+    color:#b02a2a;
+    font-weight:600;
+    transition:.2s;
+  }
+
+  .btn-cancel:hover{
+    background:#ffcccc;
+  }
+</style>

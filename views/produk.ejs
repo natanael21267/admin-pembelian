@@ -1,0 +1,129 @@
+<div class="page-wrapper">
+
+  <div class="form-container">
+
+    <a href="/" class="btn-back">
+      ⬅ Kembali ke Dashboard
+    </a>
+
+    <div class="form-header">
+      <div class="icon-box">
+        📦
+      </div>
+      <div>
+        <h3>Daftar Produk</h3>
+        <span>List produk yang tersedia di sistem</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="table-wrapper">
+
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th>Nama Produk</th>
+            <th>Harga</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% data.forEach(p => { %>
+          <tr>
+            <td><%= p.nama %></td>
+            <td>Rp <%= p.harga.toLocaleString() %></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .page-wrapper{
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 15px;
+  }
+
+  .form-container{
+    width:780px;
+    background:#fff;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 25px 45px rgba(0,0,0,.12);
+  }
+
+  .btn-back{
+    display:inline-block;
+    margin-bottom:14px;
+    padding:8px 14px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    background:#f3f6ff;
+    border:1px solid #d6ddff;
+    color:#2f60c8;
+    transition:.25s;
+  }
+
+  .btn-back:hover{
+    background:#e8eeff;
+    transform:translateX(-2px);
+  }
+
+  .form-header{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+
+  .icon-box{
+    width:50px;
+    height:50px;
+    border-radius:14px;
+    background:#e9f3ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+  }
+
+  hr{ margin:18px 0; opacity:.3; }
+
+  .table-wrapper{
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #eee;
+  }
+
+  .table-custom{
+    width:100%;
+    border-collapse:collapse;
+  }
+
+  .table-custom thead{
+    background:#2f80ed;
+    color:white;
+  }
+
+  .table-custom th,
+  .table-custom td{
+    padding:12px 14px;
+  }
+
+  .table-custom tbody tr:nth-child(even){
+    background:#fafafa;
+  }
+
+  .table-custom tbody tr:hover{
+    background:#eef4ff;
+    transition:.2s;
+  }
+</style>

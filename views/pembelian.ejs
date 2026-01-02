@@ -1,0 +1,108 @@
+<div class="page-wrapper">
+
+  <div class="form-container">
+
+    <a href="/" class="btn-back">
+      ⬅ Kembali ke Dashboard
+    </a>
+
+    <div class="form-header">
+      <div class="icon-box">🛒</div>
+      <div>
+        <h3>Input Pembelian</h3>
+        <span>Masukkan data transaksi pembelian produk</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <form method="post" action="/pembelian">
+
+      <!-- PILIH PRODUK -->
+      <div class="form-group">
+        <label>Pilih Produk</label>
+        <select name="produk_id" id="produkSelect" required>
+          <option value="" disabled selected>— Pilih produk —</option>
+          <% produk.forEach(p => { %>
+            <option value="<%= p.id %>" data-harga="<%= p.harga %>">
+              <%= p.nama %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- HARGA PRODUK -->
+      <div class="form-group">
+        <label>Harga Produk</label>
+        <input type="text" id="harga" class="currency" readonly>
+      </div>
+
+      <!-- JUMLAH -->
+      <div class="form-group">
+        <label>Jumlah Pembelian (Qty)</label>
+        <input type="number" name="qty" id="qty" min="1" placeholder="Masukkan jumlah..." required>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="form-group">
+        <label>Total Harga</label>
+        <input type="text" id="total" class="currency" readonly>
+      </div>
+
+      <button class="btn-submit">
+        Simpan Pembelian
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  const selectProduk = document.getElementById("produkSelect");
+  const hargaField   = document.getElementById("harga");
+  const qtyField     = document.getElementById("qty");
+  const totalField   = document.getElementById("total");
+
+  function formatRupiah(x){
+    return "Rp " + Number(x).toLocaleString("id-ID");
+  }
+
+  function hitungTotal(){
+    const harga = Number(hargaField.dataset.value || 0);
+    const qty   = Number(qtyField.value || 0);
+    totalField.value = qty > 0 ? formatRupiah(harga * qty) : "";
+  }
+
+  selectProduk.addEventListener("change", () => {
+    const harga = selectProduk.selectedOptions[0].dataset.harga;
+    hargaField.dataset.value = harga;
+    hargaField.value = formatRupiah(harga);
+    hitungTotal();
+  });
+
+  qtyField.addEventListener("input", hitungTotal);
+</script>
+
+<style>
+  .page-wrapper{
+    min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px 15px;
+  }
+  .form-container{
+    width:480px;background:#fff;border-radius:18px;padding:28px;
+    box-shadow:0 25px 45px rgba(0,0,0,.12);
+  }
+  .form-header{display:flex;gap:14px;align-items:center;}
+  .icon-box{width:50px;height:50px;border-radius:14px;background:#e9f3ff;
+    display:flex;justify-content:center;align-items:center;font-size:26px;}
+  hr{margin:18px 0;opacity:.3}
+  .form-group{margin-bottom:14px}
+  label{font-weight:600;margin-bottom:6px;display:block}
+  select,input{width:100%;padding:12px;border-radius:12px;border:1px solid #dcdcdc;outline:none;transition:.2s}
+  select:focus,input:focus{border-color:#2f80ed;box-shadow:0 0 0 3px rgba(47,128,237,.15)}
+  .btn-submit{width:100%;padding:12px;border-radius:12px;border:none;font-weight:600;
+    background:#27ae60;color:#fff;cursor:pointer;margin-top:8px;transition:.25s}
+  .btn-submit:hover{background:#1f8b4d;transform:translateY(-1px)}
+  .btn-back{display:inline-block;margin-bottom:14px;padding:8px 14px;border-radius:10px;
+    text-decoration:none;font-weight:600;background:#f3f6ff;border:1px solid #d6ddff;color:#2f60c8;transition:.25s}
+  .btn-back:hover{background:#e8eeff;transform:translateX(-2px)}
+</style>
